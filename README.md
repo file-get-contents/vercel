@@ -1,1 +1,4 @@
-# react
+```
+cd react
+npm i
+```
