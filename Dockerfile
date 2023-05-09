@@ -8,3 +8,4 @@ RUN apt-get update\
 
 COPY . /home/${USERNAME}/next
 RUN chown -R node:node /home/${USERNAME}/next
+RUN npm i -g vercel
