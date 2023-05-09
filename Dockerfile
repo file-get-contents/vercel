@@ -6,5 +6,5 @@ ARG UID=1000
 RUN apt-get update\
     && apt-get install -y 
 
-COPY . /home/${USERNAME}/vite
-RUN chown -R node:node /home/${USERNAME}/vite
+COPY . /home/${USERNAME}/next
+RUN chown -R node:node /home/${USERNAME}/next

@@ -8,7 +8,7 @@ services:
     container_name: "node.js"
     volumes:
       - html:/home/node
-    working_dir: /home/node/vite
+    working_dir: /home/node/next
     user: node
     command: /bin/sh -c "while sleep 1000; do :; done"
 
