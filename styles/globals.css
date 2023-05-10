@@ -138,6 +138,7 @@ dialog[open]{
     padding: 0;
     box-shadow: 1px 1px 2px 0 var(--hai);
     overscroll-behavior-block: contain;
+    outline: none;
 }
 dialog[open]::backdrop{
     background: rgba(0, 98, 132, 0.3);
@@ -148,6 +149,16 @@ dialog[open] > div{
     padding-block: var(--chill);
     padding-inline: var(--chill);
     min-height: 100%;
+    font-size: 10vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+
+section > *{
+    margin-block: var(--chill);
 }
 
 /*************************** form ***************************/
@@ -288,6 +299,7 @@ input:focus:not(
 
 textarea{
     resize: none;
+    min-height: 50svh;
 }
 
 option {

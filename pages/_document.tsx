@@ -8,6 +8,9 @@ export default function Document() {
                 <link rel="icon" href="/yossoi.svg" />
             </Head>
             <body>
+                <header>
+                    <h1>Reactions</h1>
+                </header>
                 <Main />
                 <NextScript />
             </body>
