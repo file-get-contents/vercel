@@ -13,6 +13,7 @@ export default function Document() {
                     <h1><Link href="/">Reactions</Link></h1>
                 </header>
                 <Main />
+                <footer><a href="https://github.com/file-get-contents/vercel">https://github.com/file-get-contents/vercel</a></footer>
                 <NextScript />
             </body>
         </Html>
