@@ -157,7 +157,7 @@ dialog[open] > div{
 }
 
 
-section > *{
+section > :not(dialog){
     margin-block: var(--chill);
 }
 
@@ -336,7 +336,9 @@ fieldset:disabled :where(textarea, select, .fakeInput, .fakeInput, input:not(
 html{
     padding-inline :var(--viewport-inline);
 }
-
+header{
+    margin-block: calc(var(--chill) * 2);
+}
 article > *{
     margin-block: calc(var(--chill) * 2);
 }

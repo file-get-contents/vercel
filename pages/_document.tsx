@@ -9,7 +9,7 @@ export default function Document() {
             </Head>
             <body>
                 <header>
-                    <h1>Reactions</h1>
+                    <h1><a href="/">Reactions</a></h1>
                 </header>
                 <Main />
                 <NextScript />
