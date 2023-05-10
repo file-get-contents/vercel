@@ -336,7 +336,7 @@ fieldset:disabled :where(textarea, select, .fakeInput, .fakeInput, input:not(
 html{
     padding-inline :var(--viewport-inline);
 }
-header{
+header, footer{
     margin-block: calc(var(--chill) * 2);
 }
 article > *{
