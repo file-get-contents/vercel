@@ -1,4 +1,2 @@
-```
-cd react
-npm i
-```
+# itadakimasu
+# gochisousamadeshita
