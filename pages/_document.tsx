@@ -1,4 +1,5 @@
 import { Html, Head, Main, NextScript } from 'next/document'
+import Link from 'next/link'
 
 export default function Document() {
     return <>
@@ -9,7 +10,7 @@ export default function Document() {
             </Head>
             <body>
                 <header>
-                    <h1><a href="/">Reactions</a></h1>
+                    <h1><Link href="/">Reactions</Link></h1>
                 </header>
                 <Main />
                 <NextScript />
