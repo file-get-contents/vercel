@@ -8,9 +8,6 @@ export default function Document() {
                 <meta name="viewport" content="initial-scale=1" />
                 <link rel="icon" href="/yossoi.svg" />
                 <meta name="twitter:card" content="summary"/>
-                <meta property="og:url" content="https://vercel.yossoi.com/"/>
-                <meta property="og:title" content="reactでなんやかんやつくる"/>
-                <meta property="og:description" content="reactでなんやかんやつくる"/>
                 <meta property="og:image" content="https://vercel.yossoi.com/yossoi.png"/>
                 <meta property="og:site_name" content="vercel.yossoi.com"/>
             </Head>
