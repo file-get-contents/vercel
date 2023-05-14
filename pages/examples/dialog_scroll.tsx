@@ -59,7 +59,7 @@ export default function Component()
         div.scrollIntoView({behavior: 'smooth'})
     }, [gErrors])
 
-    const d2string = React.useCallback((gs :string[]) :string => {
+    const d2string = (gs :string[]) :string => {
         gs.sort()
         const dv :string[] = []
         for(let i = 0; i < gs.length; i++){
@@ -68,7 +68,7 @@ export default function Component()
             dv.push(hobbies[n].name)
         }
         return dv.join(', ')
-    }, [])
+    }
 
     React.useEffect(() => {
         if(!(formRef.current instanceof HTMLFormElement)) return
