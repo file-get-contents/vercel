@@ -40,7 +40,7 @@ export default function Component() :JSX.Element
                 <section>
                     <h2>For the rule that value and onChange are always paired</h2>
                     <pre>client.js:1 Warning: You provided a `value` prop to a form field without an `onChange` handler. This will render a read-only field. If the field should be mutable use `defaultValue`. Otherwise, set either `onChange` or `readOnly`.</pre>
-                    <p>I've been trying to figure out how to implement a controlled component in an easy and rule-compliant manner.</p>
+                    <p dangerouslySetInnerHTML={{__html: `I've been trying to figure out how to implement a controlled component in an easy and rule-compliant manner.`}}></p>
                     <p><a href="https://github.com/jsx-eslint/eslint-plugin-react/issues/3143">New Rule: onChange or readOnly prop when checked is set on an input element</a></p>
                     <pre>
                         <code>{`// logic section

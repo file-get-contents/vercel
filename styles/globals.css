@@ -73,6 +73,7 @@ textarea {
     padding-block: 0;
     color: var(--kuro);
     cursor: default;
+    word-break: break-word;
 }
 
 body {
