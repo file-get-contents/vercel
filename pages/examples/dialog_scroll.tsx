@@ -41,23 +41,14 @@ type Errors<T> = {
     [K in keyof T] ?:string[]
 }
 
+
 export default function Component()
 {
+    const dID = React.useMemo(() => hobbies.map((hobby) => hobby.id), [])
     const gData = React.useMemo(() => ({a: 'fetched.', b: 'fetched.', c: 'fetched.', d: ['01', '02',], e: 'fetched.',}), [])
     const [gDisabled, sDisabled] = React.useState<boolean>(false)
     const [gDialog, sDialog] = React.useState<string>('')
     const [gErrors, sErrors] = React.useState<Errors<Data>>({})
-    const [gGenres, sGenres] = React.useState<string>('')
-    const dID = React.useMemo(() => hobbies.map((hobby) => hobby.id), [])
-    const formRef = React.useRef<HTMLFormElement>(null)
-
-    React.useEffect(() => {
-        if(!(formRef.current instanceof HTMLFormElement)) return
-        const uls = formRef.current.querySelectorAll<HTMLUListElement>('fieldset > div > ul.errors')
-        if(uls.length == 0) return
-        const div = uls[0].parentElement as HTMLDivElement
-        div.scrollIntoView({behavior: 'smooth'})
-    }, [gErrors])
 
     const d2string = (gs :string[]) :string => {
         gs.sort()
@@ -70,18 +61,25 @@ export default function Component()
         return dv.join(', ')
     }
 
-    if(formRef.current?.tagName.toLowerCase() == 'form'){
-        sGenres(() => d2string(gData.d))
-    }
+    const [gGenres, sGenres] = React.useState<string>(d2string(gData.d))
+    const formRef = React.useRef<HTMLFormElement>(null)
 
-    const change :React.ChangeEventHandler<HTMLUListElement> = (change) => {
+    React.useEffect(() => {
+        if(!(formRef.current instanceof HTMLFormElement)) return
+        const uls = formRef.current.querySelectorAll<HTMLUListElement>('fieldset > div > ul.errors')
+        if(uls.length == 0) return
+        const div = uls[0].parentElement as HTMLDivElement
+        div.scrollIntoView({behavior: 'smooth'})
+    }, [gErrors])
+
+    const change :React.ChangeEventHandler<HTMLInputElement> = (change) => {
         if(!(change.target instanceof HTMLInputElement)) return
         if(!(change.target.form instanceof HTMLFormElement)) return
         const ds = (new FormData(change.target.form)).getAll('d') as string[]
         sGenres(() => d2string(ds))
     }
 
-    const submit :React.FormEventHandler<HTMLFormElement> = React.useCallback((submit) => {
+    const submit :React.FormEventHandler<HTMLFormElement> = (submit) => {
         submit.preventDefault()
         const form = submit.target
         if(!(form instanceof HTMLFormElement)) return
@@ -107,24 +105,28 @@ export default function Component()
         sErrors(() => ({...(time == 1 
             ? {b: t}
             : {a: t})}))
-    }, [])
+    }
 
-    const open :React.ReactEventHandler<HTMLInputElement> = React.useCallback((event) => {
-        event.preventDefault()
-        if(!(event.target instanceof HTMLInputElement)) return
-        const dialog = event.target.nextElementSibling
+    const dialogOpen :React.MouseEventHandler<HTMLInputElement> = (open) => {
+        open.preventDefault()
+        if(!(open.target instanceof HTMLInputElement)) return
+        const dialog = open.target.nextElementSibling
         if(!(dialog instanceof HTMLDialogElement)) return
         dialog.showModal()
-    }, [])
-    const dialogOpen :React.MouseEventHandler<HTMLInputElement> = open
-    const keyDown :React.KeyboardEventHandler<HTMLInputElement> = React.useCallback((key) => {
+    }
+    const keyDown :React.KeyboardEventHandler<HTMLInputElement> = (key) => {
         if(key.key.toLowerCase() != 'enter') return
-        open(key)
-    }, [])
-    const dialogClose :React.MouseEventHandler<HTMLDialogElement> = React.useCallback((click) => {
+        key.preventDefault()
+        if(!(key.target instanceof HTMLInputElement)) return
+        const dialog = key.target.nextElementSibling
+        if(!(dialog instanceof HTMLDialogElement)) return
+        dialog.showModal()
+    }
+
+    const dialogClose :React.MouseEventHandler<HTMLDialogElement> = (click) => {
         if(!(click.target instanceof HTMLDialogElement)) return
-            click.target.close()
-    }, [])
+        click.target.close()
+    }
 
     const buttonClick :React.MouseEventHandler = (click) => {
         click.preventDefault()
@@ -221,7 +223,7 @@ export default function Component()
                                     <div>
                                         <input
                                             type='text'
-                                            defaultValue={gGenres}
+                                            value={gGenres}
                                             readOnly
                                             role='button'
                                             onClick={dialogOpen}
@@ -229,14 +231,15 @@ export default function Component()
                                         />
                                         <dialog onClick={dialogClose}>
                                             <div>
-                                                <ul className='checkbox' onChange={change}>
+                                                <ul className='checkbox'>
                                                     {hobbies.map((hobby, i) => <li key={i}>
                                                         <input
                                                             type='checkbox'
                                                             name='d'
-                                                            defaultValue={hobby.id}
+                                                            value={hobby.id}
                                                             id={`hobby-${i}`}
-                                                            defaultChecked={gData.d.includes(hobby.id)}
+                                                            checked={gData.d.includes(hobby.id)}
+                                                            onChange={change}
                                                         />
                                                         <label htmlFor={`hobby-${i}`}>{hobby.name}</label>
                                                     </li>)}

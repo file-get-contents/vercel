@@ -18,8 +18,6 @@ export default function Component() :JSX.Element
         <meta property="og:description" content="onchange and value pair"/>
     </Head>
 
-
-
     const [gControlled, sControlled] = React.useState<controlled>({a: 'test', b: 'test'})
 
     const submit :React.FormEventHandler<HTMLFormElement> = async (submit) => {
@@ -87,7 +85,7 @@ const catchChange :React.ChangeEventHandler<HTMLFormElement> = async (change) =>
                                 </div>
                             </div>
                        </fieldset>
-                        <button type="submit" style={{marginTop: '0',}}>send</button>
+                        <button type="submit" style={{marginTop: '0',}}>dammy button</button>
                     </form>
                 </section>
             </article>
