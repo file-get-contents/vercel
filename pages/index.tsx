@@ -27,7 +27,7 @@ export default function Component({files, } :props)
             <article>
                 <section>
                     <h2>Examples</h2>
-                    <ul>
+                    <ul style={{display: 'flex', flexFlow: 'column wrap',gap: 'var(--chill)'}}>
                     {
                         files.map((file) => {
                         return <li key={`${file}`}>

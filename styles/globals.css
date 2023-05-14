@@ -36,6 +36,7 @@ main,
 nav,
 section,
 blockquote,
+code,
 dd,
 div,
 dl,
@@ -341,4 +342,16 @@ header, footer{
 }
 article > *{
     margin-block: calc(var(--chill) * 2);
+}
+
+pre{
+    overflow-x: scroll;
+    background: var(--hai);
+    width: 100%;
+}
+code{
+    width: max-content;
+    white-space: pre-wrap;
+    padding-block: var(--chill);
+    padding-inline: var(--chill);
 }

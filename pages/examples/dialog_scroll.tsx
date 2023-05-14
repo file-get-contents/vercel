@@ -138,7 +138,6 @@ export default function Component()
 
     return <>
         <Head>
-
             <title>dialog tag and scroll to something.</title>
             <meta name="description" content="using dialog and scrollIntoView" />
             <meta property="og:url" content="https://vercel.yossoi.com/examples/dialog_scroll"/>
