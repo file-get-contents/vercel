@@ -41,27 +41,15 @@ type Errors<T> = {
     [K in keyof T] ?:string[]
 }
 
+const initial = {a: 'fetched.', b: 'fetched.', c: 'fetched.', d: ['01', '02',], e: 'fetched.',}
 
 export default function Component()
 {
     const dID = React.useMemo(() => hobbies.map((hobby) => hobby.id), [])
-    const gData = React.useMemo(() => ({a: 'fetched.', b: 'fetched.', c: 'fetched.', d: ['01', '02',], e: 'fetched.',}), [])
     const [gDisabled, sDisabled] = React.useState<boolean>(false)
     const [gDialog, sDialog] = React.useState<string>('')
     const [gErrors, sErrors] = React.useState<Errors<Data>>({})
-
-    const d2string = (gs :string[]) :string => {
-        gs.sort()
-        const dv :string[] = []
-        for(let i = 0; i < gs.length; i++){
-            const n = dID.indexOf(gs[i])
-            if(n < 0) continue
-            dv.push(hobbies[n].name)
-        }
-        return dv.join(', ')
-    }
-
-    const [gGenres, sGenres] = React.useState<string>(d2string(gData.d))
+    const [gGenres, sGenres] = React.useState<string[]>(initial.d)
     const formRef = React.useRef<HTMLFormElement>(null)
 
     React.useEffect(() => {
@@ -76,7 +64,7 @@ export default function Component()
         if(!(change.target instanceof HTMLInputElement)) return
         if(!(change.target.form instanceof HTMLFormElement)) return
         const ds = (new FormData(change.target.form)).getAll('d') as string[]
-        sGenres(() => d2string(ds))
+        sGenres(() => ds)
     }
 
     const submit :React.FormEventHandler<HTMLFormElement> = (submit) => {
@@ -101,20 +89,21 @@ export default function Component()
         sDialog(() => 'NG!!')
         dialog.showModal()
         sDisabled(() => false)
-        const t = ['dammy error!', 'dammy error!', 'dammy error!']
+        const t = ['dammy error!']
         sErrors(() => ({...(time == 1 
             ? {b: t}
             : {a: t})}))
     }
 
-    const dialogOpen :React.MouseEventHandler<HTMLInputElement> = (open) => {
+    const dialogOpen :React.MouseEventHandler<HTMLInputElement> = async (open) => {
         open.preventDefault()
         if(!(open.target instanceof HTMLInputElement)) return
         const dialog = open.target.nextElementSibling
         if(!(dialog instanceof HTMLDialogElement)) return
         dialog.showModal()
     }
-    const keyDown :React.KeyboardEventHandler<HTMLInputElement> = (key) => {
+
+    const keyDown :React.KeyboardEventHandler<HTMLInputElement> = async (key) => {
         if(key.key.toLowerCase() != 'enter') return
         key.preventDefault()
         if(!(key.target instanceof HTMLInputElement)) return
@@ -123,12 +112,12 @@ export default function Component()
         dialog.showModal()
     }
 
-    const dialogClose :React.MouseEventHandler<HTMLDialogElement> = (click) => {
+    const dialogClose :React.MouseEventHandler<HTMLDialogElement> = async (click) => {
         if(!(click.target instanceof HTMLDialogElement)) return
         click.target.close()
     }
 
-    const buttonClick :React.MouseEventHandler = (click) => {
+    const buttonClick :React.MouseEventHandler = async (click) => {
         click.preventDefault()
         sDisabled(() => false)
         if(!(click.target instanceof HTMLButtonElement)) return
@@ -136,6 +125,18 @@ export default function Component()
         if(!(form instanceof HTMLFormElement)) return
         form.scrollIntoView({behavior: 'smooth'})
     }
+
+    const d2string = React.useCallback((gs :string[]) :string => {
+        gs.sort()
+        const dv :string[] = []
+        for(let i = 0; i < gs.length; i++){
+            const n = dID.indexOf(gs[i])
+            if(n < 0) continue
+            dv.push(hobbies[n].name)
+        }
+        return dv.join(', ')
+    }, [])
+
 
     return <>
         <Head>
@@ -163,7 +164,7 @@ export default function Component()
                                         <input 
                                             type='text'
                                             name='a'
-                                            defaultValue={gData.a}
+                                            defaultValue={initial.a}
                                             required
                                         />
                                     </div>
@@ -178,7 +179,7 @@ export default function Component()
                                         <input
                                             type='text'
                                             name='b'
-                                            defaultValue={gData.b}
+                                            defaultValue={initial.b}
                                             required 
                                         />
                                     </div>
@@ -193,7 +194,7 @@ export default function Component()
                                         <input
                                             type='text'
                                             name='c'
-                                            defaultValue={gData.c}
+                                            defaultValue={initial.c}
                                             required 
                                         />
                                     </div>
@@ -207,7 +208,7 @@ export default function Component()
                                     <div>
                                         <textarea
                                             name='e'
-                                            defaultValue={gData.e}
+                                            defaultValue={initial.e}
                                             required 
                                         >
                                         </textarea>
@@ -216,14 +217,13 @@ export default function Component()
                                 {errors(gErrors?.e)}
                             </div>
 
-
                             <div>
                                 <div>
                                     <label>about something</label>
                                     <div>
                                         <input
                                             type='text'
-                                            value={gGenres}
+                                            value={d2string(gGenres)}
                                             readOnly
                                             role='button'
                                             onClick={dialogOpen}
@@ -238,7 +238,7 @@ export default function Component()
                                                             name='d'
                                                             value={hobby.id}
                                                             id={`hobby-${i}`}
-                                                            checked={gData.d.includes(hobby.id)}
+                                                            checked={gGenres.includes(hobby.id)}
                                                             onChange={change}
                                                         />
                                                         <label htmlFor={`hobby-${i}`}>{hobby.name}</label>
