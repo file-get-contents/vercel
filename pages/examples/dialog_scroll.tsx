@@ -70,16 +70,16 @@ export default function Component()
         return dv.join(', ')
     }
 
-    if(formRef.current instanceof HTMLFormElement){
+    if(formRef.current?.tagName.toLowerCase() == 'form'){
         sGenres(() => d2string(gData.d))
     }
 
-    const change :React.ChangeEventHandler<HTMLUListElement> = React.useCallback((change) => {
+    const change :React.ChangeEventHandler<HTMLUListElement> = (change) => {
         if(!(change.target instanceof HTMLInputElement)) return
         if(!(change.target.form instanceof HTMLFormElement)) return
         const ds = (new FormData(change.target.form)).getAll('d') as string[]
         sGenres(() => d2string(ds))
-    }, [])
+    }
 
     const submit :React.FormEventHandler<HTMLFormElement> = React.useCallback((submit) => {
         submit.preventDefault()
@@ -116,7 +116,7 @@ export default function Component()
         if(!(dialog instanceof HTMLDialogElement)) return
         dialog.showModal()
     }, [])
-    const dialogOpen :React.MouseEventHandler<HTMLInputElement> = React.useCallback(open, [])
+    const dialogOpen :React.MouseEventHandler<HTMLInputElement> = open
     const keyDown :React.KeyboardEventHandler<HTMLInputElement> = React.useCallback((key) => {
         if(key.key.toLowerCase() != 'enter') return
         open(key)

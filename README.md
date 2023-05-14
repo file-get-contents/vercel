@@ -1,2 +1,1 @@
-# itadakimasu
-# gochisousamadeshita
+# Learning React
