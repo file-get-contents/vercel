@@ -73,7 +73,7 @@ export default function Component()
     React.useEffect(() => {
         if(!(formRef.current instanceof HTMLFormElement)) return
         sGenres(() => d2string(gData.d))
-    }, [])
+    })
 
     const change :React.ChangeEventHandler<HTMLUListElement> = React.useCallback((change) => {
         if(!(change.target instanceof HTMLInputElement)) return
