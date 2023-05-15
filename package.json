@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "local": "tsc && vite build --debug true --mode devlocal --logLevel info --clearScreen --sourcemap true",
     "start": "next start",
     "lint": "next lint"
   },
